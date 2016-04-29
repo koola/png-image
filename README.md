@@ -57,4 +57,4 @@ pngImage.runWithPromise().then(function () {
 
 The MIT License
 
-Copyright 2014 Koola.
+Copyright 2016 Koola.
