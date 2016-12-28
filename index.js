@@ -2,7 +2,7 @@
 
 const fs = require('fs'),
     PNG = require('pngjs').PNG,
-    Promise = require('promise');
+    promise = require('promise');
 
 /**
  * PNG-Image class
@@ -42,20 +42,21 @@ class PNGImage {
      *
      * @method compose
      * @returns {Promise}
+     * @public
      */
     compose() {
         let composeWidth = 0,
             composeHeight = 0,
             offsetY = 0;
 
-        return Promise.resolve().then(() => {
+        return promise.resolve().then(() => {
             return this._imagePath.reduce((promise, path) => {
                 return promise.then(() => {
                     return this._loadImage(path).then(image => {
                         this._imageQueue.push(image);
                     });
                 });
-            }, Promise.resolve())
+            }, promise.resolve());
         }).then(() => {
             if (this._composeOffset) {
                 // Last image requires cropping
@@ -72,7 +73,6 @@ class PNGImage {
                 composeWidth = image.width;
                 composeHeight += image.height;
             }
-            // Create PNG image
             this._image = new PNG({width: composeWidth, height: composeHeight});
             // Compose PNG
             for (let image of this._imageQueue) {
@@ -88,6 +88,7 @@ class PNGImage {
      *
      * @method runWithPromise
      * @returns {Promise}
+     * @public
      */
     runWithPromise() {
         return this._loadImage(this._imagePath[0]).then(image => {
@@ -103,9 +104,10 @@ class PNGImage {
      * Runs node-style
      *
      * @method run
+     * @public
      */
     run() {
-        return Promise.nodeify(this.runWithPromise);
+        return promise.nodeify(this.runWithPromise);
     }
 
     /**
@@ -148,16 +150,16 @@ class PNGImage {
         const image = new PNG();
 
         if (typeof filename === 'string') {
-            return Promise.denodeify(fs.readFile).call(this, filename).then(buffer => {
+            return promise.denodeify(fs.readFile).call(this, filename).then(buffer => {
                 return new Promise((resolve, reject) => {
                     return image.parse(buffer, (error, data) => {
                         if (error) {
                             reject(error);
                         }
                         resolve(data);
-                    })
+                    });
                 });
-            })
+            });
         } else if (filename instanceof Buffer) {
             return new Promise((resolve, reject) => {
                 return image.parse(filename, (error, data) => {
@@ -165,10 +167,10 @@ class PNGImage {
                         reject(error);
                     }
                     resolve(data);
-                })
+                });
             });
         } else {
-            return Promise.reject('Expected a valid image path, stream or buffer.');
+            return promise.reject('Expected a valid image path, stream or buffer.');
         }
     }
 
@@ -181,7 +183,7 @@ class PNGImage {
      * @private
      */
     _writeImage(image, filePath) {
-        return Promise.denodeify(fs.writeFile).call(this, filePath, PNG.sync.write(image));
+        return promise.denodeify(fs.writeFile).call(this, filePath, PNG.sync.write(image));
     }
 }
 
