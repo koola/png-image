@@ -48,7 +48,7 @@ class PNGImage {
             composeHeight = 0,
             offsetY = 0;
 
-        Promise.resolve().then(() => {
+        return Promise.resolve().then(() => {
             return this._imagePath.reduce((promise, path) => {
                 return promise.then(() => {
                     return this._loadImage(path).then(image => {
@@ -159,7 +159,14 @@ class PNGImage {
                 });
             })
         } else if (filename instanceof Buffer) {
-            return Promise.denodeify(image.parse).call(this, filename)
+            return new Promise((resolve, reject) => {
+                return image.parse(filename, (error, data) => {
+                    if (error) {
+                        reject(error);
+                    }
+                    resolve(data);
+                })
+            });
         } else {
             return Promise.reject('Expected a valid image path, stream or buffer.');
         }
