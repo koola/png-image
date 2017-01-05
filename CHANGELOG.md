@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/koola/png-image/compare/v1.1.1...v1.2.0) (2017-01-05)
+
+
+### Features
+
+* **compose:** add writeImage and toBuffer methods ([40a8f95](https://github.com/koola/png-image/commit/40a8f95))
+
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/koola/png-image/compare/v1.1.0...v1.1.1) (2016-12-28)
 

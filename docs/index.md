@@ -18,6 +18,12 @@
 <dt><a href="#run">run()</a></dt>
 <dd><p>Runs node-style</p>
 </dd>
+<dt><a href="#writeImage">writeImage(instance)</a> ⇒ <code>promise</code></dt>
+<dd><p>Writes the image to the filesystem</p>
+</dd>
+<dt><a href="#toBuffer">toBuffer(instance)</a> ⇒ <code>promise</code></dt>
+<dd><p>Writes the image to the filesystem</p>
+</dd>
 </dl>
 
 <a name="PNGImage"></a>
@@ -74,3 +80,27 @@ Runs node-style
 
 **Kind**: global function  
 **Access:** public  
+<a name="writeImage"></a>
+
+## writeImage(instance) ⇒ <code>promise</code>
+Writes the image to the filesystem
+
+**Kind**: global function  
+**Access:** public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| instance | <code>this</code> | PNG-image |
+
+<a name="toBuffer"></a>
+
+## toBuffer(instance) ⇒ <code>promise</code>
+Writes the image to the filesystem
+
+**Kind**: global function  
+**Access:** public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| instance | <code>this</code> | PNG-image |
+
