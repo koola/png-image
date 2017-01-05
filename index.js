@@ -79,7 +79,7 @@ class PNGImage {
                 image.bitblt(this._image, 0, 0, image.width, image.height, 0, offsetY);
                 offsetY += image.height;
             }
-            return this._writeImage(this._image, this._imageOutputPath);
+            return promise.resolve(this);
         });
     }
 
@@ -172,6 +172,30 @@ class PNGImage {
         } else {
             return promise.reject('Expected a valid image path, stream or buffer.');
         }
+    }
+
+    /**
+     * Writes the image to the filesystem
+     *
+     * @method writeImage
+     * @param {this} instance PNG-image
+     * @returns {promise}
+     * @public
+     */
+    writeImage(instance = this) {
+        return instance._writeImage(instance._image, instance._imageOutputPath);
+    }
+
+    /**
+     * Writes the image to the filesystem
+     *
+     * @method toBuffer
+     * @param {this} instance PNG-image
+     * @returns {promise}
+     * @public
+     */
+    toBuffer(instance = this) {
+        return promise.resolve(PNG.sync.write(instance._image));
     }
 
     /**
